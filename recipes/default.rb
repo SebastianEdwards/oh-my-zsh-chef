@@ -11,6 +11,7 @@ end
 # for each listed user
 node['oh_my_zsh']['users'].each do |user_hash|
   home_directory = `cat /etc/passwd | grep "#{user_hash[:login]}" | cut -d ":" -f6`.chop
+  home_directory = "/home/#{user_hash[:login]}" unless home_directory.length > 0
 
   git "#{home_directory}/.oh-my-zsh" do
     repository 'git://github.com/robbyrussell/oh-my-zsh.git'
